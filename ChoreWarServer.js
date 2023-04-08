@@ -16,9 +16,6 @@ let name1;
 require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
 
 
- const { MongoClient, ServerApiVersion } = require('mongodb');
-
-
 process.stdin.on("readable", function () {
     let dataInput = process.stdin.read();
     if (dataInput !== null) {
