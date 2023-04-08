@@ -39,4 +39,45 @@ app.get("/", (request, response) => {
     response.render("index", variables);
 });
 
+
+app.get("/createTasks", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("apply", variables);
+
+});
+
+app.get("/leaderboard", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("apply", variables);
+
+});
+
+app.get("/login", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("apply", variables);
+
+});
+
+app.get("/signup", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("apply", variables);
+
+});
+
+app.get("/tasks", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("apply", variables);
+
+});
+
 app.listen(portNumber);
