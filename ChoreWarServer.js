@@ -27,7 +27,16 @@ process.stdin.on("readable", function () {
 });
 
 app.get("/", (request, response) => { 
-    response.render("index", {});
+
+    let variables = {
+		valLink: "null",
+		styleLoggedOut: "button-55",
+		styleLoggedIn: "button-55-disabled",
+        username: "null",
+        valButton: "null"
+	}
+
+    response.render("index", variables);
 });
 
 app.listen(portNumber);
