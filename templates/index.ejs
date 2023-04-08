@@ -3,21 +3,32 @@
     <head>
         <title>Chore Wars | Home</title>
         <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body id="homePage" >
-        <a href="/" id="homeButton" class="button-55" role="button">
-            <iconify-icon icon="material-symbols:home-outline-rounded" style="color: red;" width="30" height="30"></iconify-icon>
-        </a>
-        <a href="/<%- valLink%>" id="logButton" class="button-55" role="button"><%-valButton%></a>
-        <div id="menu">
-            <h1>Chore Wars</h1>
-
-            <a class="<%- styleLoggedOut %>" role="button" href="/login">Sign In</a><br><br>
-            <a  class="<%- styleLoggedIn %>" role="button" href="/tasks">View Tasks</a><br><br>
-            <a  class="<%- styleLoggedIn %>" role="button" href="/leaderboard">Leaderboard</a><br><br>
-            <a  class="<%- styleLoggedIn %>" role="button" href="/createTasks">Create Tasks</a><br>
-
-            <p>Logged in as <%- username %></p>
+    <body id="body-home" >
+        <div id="content">
+            <div id="div-left">
+                <h1>Chore Wars</h1>
+            </div>
+            <div id="div-right">
+                <div id="div-right-logo">
+                    <img width="200" height="200" src="logo.png">
+                </div>
+                <div id="div-bottom-buttons">
+                    <div id="inputs">
+                        <label>Username</label>
+                        <input type="text"/>
+                        <br/>
+                        <label>Password</label>
+                        <input type="password"/>
+                        <br/>
+                        <div id="butt">
+                            <a class="login-signup <%- styleLoggedOut %>" role="button" href="/login">Login</a><br><br>
+                            <a class="login-signup <%- styleLoggedOut %>" role="button" href="/signup">Signup</a><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
