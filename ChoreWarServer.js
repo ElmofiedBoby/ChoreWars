@@ -11,8 +11,23 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static('static'))
 console.log(`Web server is running at http://localhost:${portNumber}`);
-process.stdout.write("Stop to shutdown the server: ");
+process.stdout.write("stop to shutdown the server: ");
 let name1;
+
+class Task {
+    constructor(description, points, frequency){
+        this.description = description;
+        this.points = points;
+        this.frequency = frequency
+
+    }
+}
+
+var taskArr = new Array()
+
+function addNewTask(){
+
+}
 
 
 require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
@@ -39,6 +54,58 @@ app.get("/", (request, response) => {
 	}
 
     response.render("index", variables);
+});
+
+
+app.get("/createTasks", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("createTasks", variables);
+
+});
+
+app.post("/createTasks", async (request, response) => { 
+    const variables = {
+       /* taskDescription: request.body.taskDescription,
+        pointAmount: request.body.pointAmount,
+        daysAmount: request.body.daysAmount,*/
+        tasks: taskArr
+    };
+    //taskArr.push(Task(taskDescription, pointAmount, daysAmount))
+    response.render("tasks", variables); 
+});
+
+app.get("/leaderboard", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("leaderboard", variables);
+
+});
+
+app.get("/login", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("login", variables);
+
+});
+
+app.get("/signup", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("signup", variables);
+
+});
+
+app.get("/tasks", (request, response) => { 
+    const variables ={
+        
+    }
+    response.render("tasks", variables);
+
 });
 
 app.listen(portNumber);
