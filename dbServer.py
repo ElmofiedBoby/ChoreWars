@@ -97,6 +97,101 @@ def create_task():
         "task_id": task_id
     })
 
+@app.route('/get/user/validate', methods=['POST'])
+def validate_user():
+    data = request.get_json()
+
+    user_name = data['user_name']
+    user_password = data['user_password']
+
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM Users WHERE user_name = %s AND user_password = %s", (user_name, user_password,))
+    result = cur.fetchone()
+
+    if result:
+        return jsonify({
+            "success": True,
+            "user_id": result[0]
+        })
+    else:
+        return jsonify({
+            "success": False,
+            "user_id": None
+        })
+
+
+@app.route('/get/user', methods=['GET'])
+def get_user():
+    user_id = request.args.get('user_id')
+
+    cur = conn.cursor()
+
+    # Query the Users table for the user with the specified user_id
+    cur.execute("SELECT * FROM Users WHERE user_id = %s", (user_id,))
+    result = cur.fetchone()
+
+    cur.close()
+
+    # If a matching User is found, return its data as a JSON response
+    if result:
+        user_data = {
+            'user_id': result[0],
+            'user_name': result[1],
+            'user_password': result[2],
+            'user_first': result[3],
+            'user_pfp': result[4],
+            'room_code': result[5]
+            
+        }
+        return jsonify(user_data)
+    else:
+        # If no matching User is found, return a 404 error
+        return jsonify({'error': f'User with user_id {user_id} not found'}), 404
+    
+
+@app.route('/get/room/all', methods=['GET'])
+def get_all_rooms():
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM Rooms")
+    result = cur.fetchall()
+
+    cur.close()
+
+    rooms = []
+    for row in result:
+        room = {
+            'room_code': row[0],
+            'room_name': row[1],
+            'room_limit': row[2]
+        }
+        rooms.append(room)
+    return jsonify(rooms)
+
+@app.route('/get/room', methods=['GET'])
+def get_room():
+    room_code = request.args.get('code')
+    
+    cur = conn.cursor()
+
+    # Query the Rooms table for the room with the specified room_code
+    cur.execute("SELECT * FROM Rooms WHERE room_code = %s", (room_code,))
+    result = cur.fetchone()
+
+    cur.close()
+
+    # If a matching room is found, return its data as a JSON response
+    if result:
+        room_data = {
+            'room_code': result[0],
+            'room_name': result[1],
+            'room_limit': result[2]
+        }
+        return jsonify(room_data)
+    else:
+        # If no matching room is found, return a 404 error
+        return jsonify({'error': f'Room with room_code {room_code} not found'}), 404
 
 @app.route('/create/room', methods=['POST'])
 def create_room():
