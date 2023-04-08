@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Chore Wars</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+<h1>Create Task</h1>
+
+<form id="myForm" method="post">
+    <div id="formBorder" style="border-style: solid; border-width: 2px; padding: 10px">
+        <label>Task Description: <input type="text" name="taskDescription"/></label>
+        <br><br>
+        <label>Points awarded for completing task: <input type="number" name="pointAmount"/></label>
+        <br><br>
+        <label>This task should be completed _ days after it was last completed <input type="number" name="daysAmount"/></label>
+        <input type="reset" >
+        <input type="submit" value="Submit Application" onClick="confirm('Are you sure you want to submit your Task?\n you will not be able to remove task once submitted.')">
+    </div>
+</form>
+<hr>
+<a href="/">HOME</a><br></li>
+
+
+</body>
+
+</html>
+
