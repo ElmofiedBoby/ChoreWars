@@ -23,6 +23,10 @@ class Task {
 
 var taskArr = new Array()
 
+function addNewTask(){
+
+}
+
 
 require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
 
@@ -64,7 +68,7 @@ app.post("/createTasks", async (request, response) => {
        /* taskDescription: request.body.taskDescription,
         pointAmount: request.body.pointAmount,
         daysAmount: request.body.daysAmount,*/
-        tasks: request.body.taskDescription
+        tasks: taskArr
     };
     //taskArr.push(Task(taskDescription, pointAmount, daysAmount))
     response.render("tasks", variables); 
