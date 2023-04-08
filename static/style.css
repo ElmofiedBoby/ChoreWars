@@ -2,7 +2,7 @@
 
 /* set the background gradient for the left side */
 #div-left {
-  background: linear-gradient(to bottom, #3399ff, #66ccff); /* replace these colors with your desired gradient */
+  background: linear-gradient(to bottom, rgb(40,93,179), rgb(0,176,240)); /* replace these colors with your desired gradient */
   width: 50%;
   height: 100vh;
   display: flex;
