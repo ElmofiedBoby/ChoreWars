@@ -44,7 +44,7 @@ app.get("/createTasks", (request, response) => {
     const variables ={
         
     }
-    response.render("apply", variables);
+    response.render("createTasks", variables);
 
 });
 
@@ -52,7 +52,7 @@ app.get("/leaderboard", (request, response) => {
     const variables ={
         
     }
-    response.render("apply", variables);
+    response.render("leaderboard", variables);
 
 });
 
@@ -60,7 +60,7 @@ app.get("/login", (request, response) => {
     const variables ={
         
     }
-    response.render("apply", variables);
+    response.render("login", variables);
 
 });
 
@@ -68,7 +68,7 @@ app.get("/signup", (request, response) => {
     const variables ={
         
     }
-    response.render("apply", variables);
+    response.render("signup", variables);
 
 });
 
@@ -76,7 +76,7 @@ app.get("/tasks", (request, response) => {
     const variables ={
         
     }
-    response.render("apply", variables);
+    response.render("tasks", variables);
 
 });
 
