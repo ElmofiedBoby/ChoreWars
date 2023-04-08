@@ -9,8 +9,19 @@ app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:false}));
 console.log(`Web server is running at http://localhost:${portNumber}`);
-process.stdout.write("Stop to shutdown the server: ");
+process.stdout.write("stop to shutdown the server: ");
 let name1;
+
+class Task {
+    constructor(description, points, frequency){
+        this.description = description;
+        this.points = points;
+        this.frequency = frequency
+
+    }
+}
+
+var taskArr = new Array()
 
 
 require("dotenv").config({ path: path.resolve(__dirname, 'credentials/.env') }) 
@@ -46,6 +57,17 @@ app.get("/createTasks", (request, response) => {
     }
     response.render("createTasks", variables);
 
+});
+
+app.post("/createTasks", async (request, response) => { 
+    const variables = {
+       /* taskDescription: request.body.taskDescription,
+        pointAmount: request.body.pointAmount,
+        daysAmount: request.body.daysAmount,*/
+        tasks: request.body.taskDescription
+    };
+    //taskArr.push(Task(taskDescription, pointAmount, daysAmount))
+    response.render("tasks", variables); 
 });
 
 app.get("/leaderboard", (request, response) => { 
