@@ -1,0 +1,3 @@
+psycop2-binary
+flask
+python-dotenv
