@@ -34,14 +34,7 @@
 
 /* add some styles to the buttons */
 #butt a {
-  display: block;
-  padding: 10px;
-  text-align: center;
-  width: 100%;
-  border: 1px solid black;
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
+  
 }
 
 #butt a:hover {
@@ -91,24 +84,24 @@ input[type="password"] {
   font-size: 1em;
   color: white;
   background-color: #3399ff;
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  margin-right: 10px;
+  text-align: center;
+  text-decoration: none;
 }
 
 /* hover style for the login button */
 .login-signup:hover {
   background-color: #66ccff;
+  color: white;
 }
 
 #butt {
   display: flex;
   justify-content: space-between;
-}
-
-#butt a {
-  margin-right: 10px;
 }
 
 #inputs {
