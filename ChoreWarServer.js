@@ -86,7 +86,6 @@ app.get("/leaderboard", (request, response) => {
 
 app.get("/login", (request, response) => { 
     const variables ={
-        
     }
     response.render("login", variables);
 
