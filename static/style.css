@@ -33,7 +33,7 @@
 }
 
 /* add some styles to the buttons */
-a {
+#butt a {
   display: block;
   padding: 10px;
   text-align: center;
@@ -44,7 +44,7 @@ a {
   color: black;
 }
 
-a:hover {
+#butt a:hover {
   background-color: gray;
   color: white;
 }
@@ -113,4 +113,60 @@ input[type="password"] {
 
 #inputs {
   font-family: 'Roboto', sans-serif;
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #272941;
+  font-family: 'Roboto', sans-serif;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+ 
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #ec8027;
+  color: white;
+}
+
+.background {
+  background: linear-gradient(to bottom, rgb(40,93,179), rgb(0,176,240)); /* replace these colors with your desired gradient */
+  
+  width: 100%;
+  height: 300vh;
+  overflow: auto;
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  float: left; /* add this to float the div to the left */
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  top: 30;
+ 
+  /*min-height: 100%;
+  position: relative;*/
+}
+.timeLine {
+  position: fixed;
+  bottom: 0;
+}
+
+.horizontal-line {
+  border-bottom: 2px solid black;
 }
