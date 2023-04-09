@@ -201,7 +201,7 @@ def get_task():
         return jsonify(task_data)
     else:
         # If no matching User is found, return a 404 error
-        return jsonify({'error': f'User with user_id {user_id} not found'}), 404
+        return jsonify({'error': f'Task with task_id {task_id} not found'}), 404
 
     
 
