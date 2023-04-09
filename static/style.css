@@ -180,6 +180,19 @@ form {
   margin-top: 40%;*/
   display: inline-block;
   margin-top: 20%
- 
 
 }
+
+
+.checkbox:checked:before{
+background-color:green;
+}
+
+
+
+
+.w3-container:after,.w3-container:before,
+.w3-round-small{border-radius:2px}.w3-round,.w3-round-medium{border-radius:4px}.w3-round-large{border-radius:8px}.w3-round-xlarge{border-radius:16px}.w3-round-xxlarge{border-radius:40px}
+
+/* Colors */
+.w3-orange,.w3-hover-orange:hover{color:#000!important;background-color:#ff9800!important}
