@@ -174,6 +174,7 @@ def validate_user():
         })
 
 
+
 @app.route('/get/user', methods=['GET'])
 def get_user():
     user_id = request.args.get('user_id')
@@ -203,6 +204,36 @@ def get_user():
         # If no matching User is found, return a 404 error
         return jsonify({'error': f'User with user_id {user_id} not found'}), 404
     
+
+@app.route('/get/room/users', methods=['GET'])
+def get_room_users():
+    room_code = request.args.get('room_code')
+
+    cur = conn.cursor()
+    cur.execute('SELECT user_id FROM Users WHERE room_code = %s', (room_code,))
+    result = cur.fetchall()
+    cur.close()
+
+    ids = []
+    for row in result:
+        ids.append(row[0])
+
+    return jsonify(ids)
+
+@app.route('/get/room/tasks', methods=['GET'])
+def geT_room_tasks():
+    room_code = request.args.get('room_code')
+
+    cur = conn.cursor()
+    cur.execute('SELECT task_id FROM Tasks WHERE room_code = %s', (room_code,))
+    result = cur.fetchall()
+    cur.close()
+
+    ids = []
+    for row in result:
+        ids.append(row[0])
+
+    return jsonify(ids)
 
 @app.route('/get/room/all', methods=['GET'])
 def get_all_rooms():
