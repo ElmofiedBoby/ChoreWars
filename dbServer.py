@@ -7,7 +7,7 @@ import psycopg2
 
 load_dotenv()
 app = Flask(__name__)
-conn = psycopg2.connect(os.getenv('DATABASE_URL'))
+conn = psycopg2.connect(os.getenv('DB_URL'))
 
 @app.route('/')
 def hello():
@@ -57,8 +57,11 @@ def init():
             task_points INTEGER,
             task_freq INTEGER,
             user_id INTEGER,
+            room_code VARCHAR(6),
             FOREIGN KEY (user_id)
-                REFERENCES Users (user_id)
+                REFERENCES Users (user_id),
+            FOREIGN KEY (room_code)
+                REFERENCES Rooms (room_code)
         );
     """)
 
@@ -69,33 +72,55 @@ def init():
         'status': 'Database Initialized!'
     })
 
-@app.route('/create/task', methods=['POST'])
-def create_task():
+@app.route('/update/task', methods=['POST'])
+def update_task():
     data = request.get_json()
 
+    task_id = data['task_id']
     task_name = data['task_name']
     task_description = data['task_description']
     task_points = data['task_points']
     task_freq = data['task_freq']
     user_id = data['user_id']
+    room_code = data['room_code']
 
     cur = conn.cursor()
 
-    # Insert the new user into the Users table
-    cur.execute("""
-        INSERT INTO Tasks (task_name, task_description, task_points, task_freq, user_id)
-        VALUES (%s, %s, %s, %s, %s)
-        RETURNING task_id;
-    """, (task_name, task_description, task_points, task_freq, user_id))
-    
-    task_id = cur.fetchone()[0]
-
+    cur.execute("UPDATE Users SET user_name = %s WHERE user_id = %s", (user_name, user_id))
+    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_password, user_id))
+    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_first, user_id))
+    cur.execute("UPDATE Users SET user_pfp = %s WHERE user_id = %s", (user_pfp, user_id))
+    cur.execute("UPDATE Users SET room_code = %s WHERE user_id = %s", (room_code, user_id))
     conn.commit()
     cur.close()
 
-    return jsonify({
-        "task_id": task_id
-    })
+     # Return a success message
+    return jsonify({'success': f'User with ID {user_id} updated'}), 200
+
+
+@app.route('/update/user', methods=['POST'])
+def update_user():
+    data = request.get_json()
+
+    user_id = data['user_id']
+    user_name = data['user_name']
+    user_password = data['user_password']
+    user_first = data['user_first']
+    user_pfp = data['user_pfp']
+    room_code = data['room_code']
+
+    cur = conn.cursor()
+
+    cur.execute("UPDATE Users SET user_name = %s WHERE user_id = %s", (user_name, user_id))
+    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_password, user_id))
+    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_first, user_id))
+    cur.execute("UPDATE Users SET user_pfp = %s WHERE user_id = %s", (user_pfp, user_id))
+    cur.execute("UPDATE Users SET room_code = %s WHERE user_id = %s", (room_code, user_id))
+    conn.commit()
+    cur.close()
+
+     # Return a success message
+    return jsonify({'success': f'User with ID {user_id} updated'}), 200
 
 @app.route('/get/user/validate', methods=['POST'])
 def validate_user():
@@ -248,6 +273,34 @@ def create_user():
         "username": username
     })
 
+@app.route('/create/task', methods=['POST'])
+def create_task():
+    data = request.get_json()
+
+    task_name = data['task_name']
+    task_description = data['task_description']
+    task_points = data['task_points']
+    task_freq = data['task_freq']
+    user_id = data['user_id']
+
+    cur = conn.cursor()
+
+    # Insert the new user into the Users table
+    cur.execute("""
+        INSERT INTO Tasks (task_name, task_description, task_points, task_freq, user_id)
+        VALUES (%s, %s, %s, %s, %s)
+        RETURNING task_id;
+    """, (task_name, task_description, task_points, task_freq, user_id))
+    
+    task_id = cur.fetchone()[0]
+
+    conn.commit()
+    cur.close()
+
+    return jsonify({
+        "task_id": task_id
+    })
+
 
 if __name__ == '__main__':
-    app.run(debug=True, )
+    app.run(debug=True, port=os.getenv('DB_PORT'))
