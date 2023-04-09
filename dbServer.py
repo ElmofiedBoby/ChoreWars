@@ -133,7 +133,7 @@ def update_user():
     return jsonify({'success': f'User with ID {user_id} updated'}), 200
 
 @app.route('/update/room', methods=['POST'])
-def update_user():
+def update_room():
     data = request.get_json()
 
     room_code = data['room_code']
@@ -173,7 +173,37 @@ def validate_user():
             "user_id": None
         })
 
+@app.route('/get/task', methods=[])
+def get_task():
+    task_id = request.args.get('task_id')
 
+    cur = conn.cursor()
+
+    # Query the Users table for the user with the specified user_id
+    cur.execute("SELECT * FROM Users WHERE user_id = %s", (user_id,))
+    result = cur.fetchone()
+
+    cur.close()
+
+    # If a matching Task is found, return its data as a JSON response
+    if result:
+        task_data = {
+            'task_id': result[0],
+            'task_name': result[1],
+            'task_description': result[2],
+            'task_points': result[3],
+            'task_freq': result[4],
+            'task_start': result[5],
+            'task_complete': result[6],
+            'user_id': result[7],
+            'room_code': result[8]
+        }
+        return jsonify(task_data)
+    else:
+        # If no matching User is found, return a 404 error
+        return jsonify({'error': f'User with user_id {user_id} not found'}), 404
+
+    
 
 @app.route('/get/user', methods=['GET'])
 def get_user():
@@ -322,7 +352,7 @@ def create_user():
     user_password = data['user_password']
     user_first = data['user_first']
     user_pfp = data['user_pfp']
-    user_score = data['user_score']
+    user_score = 0
 
     cur = conn.cursor()
 
@@ -375,4 +405,4 @@ def create_task():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=os.getenv('DB_PORT'))
+    app.run(debug=False, port=os.getenv('DB_PORT'))

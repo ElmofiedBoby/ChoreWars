@@ -13,13 +13,13 @@
         <a  href="tasks">Tasks</a>
         <a href="/leaderboard">Leaderboard</a>
         <a class="active" href="/createTasks">Create Tasks</a>
-        <a href="/">Log Out</a>
+        <a href="/logout">Log Out</a>
       </div>
       <h1 style="background: linear-gradient(to bottom, rgb(40,93,179), rgb(0,176,240));position: fixed; 
       top: 0;
       width: 100%;">Create Task</h1>
       <div class="background" style="text-align: center;">
-        <form id="myForm" method="post">
+        <form id="myForm" action='/createTasks' method="post">
            
                 
                 <label>Task Description: <br><input type="text" name="taskDescription"/></label>
