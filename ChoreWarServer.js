@@ -127,6 +127,11 @@ app.get("/tasks", (request, response) => {
 
 });
 
+app.get('/logout', (request, response) => {
+    response.clearCookie('user_id');
+    response.redirect('/');
+})
+
 app.post("/login", (request, response) => {
 
     //const userData = '{ user_name: '+request.body.username+', user_password: '+request.body.password+' }';
