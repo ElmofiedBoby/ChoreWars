@@ -115,6 +115,7 @@ def update_user():
     user_password = data['user_password']
     user_first = data['user_first']
     user_pfp = data['user_pfp']
+    user_score = data['user_score']
     room_code = data['room_code']
 
     cur = conn.cursor()
@@ -123,6 +124,7 @@ def update_user():
     cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_password, user_id))
     cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_first, user_id))
     cur.execute("UPDATE Users SET user_pfp = %s WHERE user_id = %s", (user_pfp, user_id))
+    cur.execute("UPDATE Users SET user_score = %s WHERE user_id = %s", (user_score, user_id))
     cur.execute("UPDATE Users SET room_code = %s WHERE user_id = %s", (room_code, user_id))
     conn.commit()
     cur.close()
@@ -140,12 +142,13 @@ def update_user():
 
     cur = conn.cursor()
 
-    cur.execute("UPDATE Rooms SET room_code = %s")
+    cur.execute("UPDATE Rooms SET room_name = %s WHERE room_code = %s", (room_name, room_code))
+    cur.execute("UPDATE Rooms SET room_limit = %s WHERE room_code = %s", (room_limit, room_code))
     conn.commit()
     cur.close()
 
      # Return a success message
-    return jsonify({'success': f'User with ID {user_id} updated'}), 200
+    return jsonify({'success': f'Room with code {room_code} updated'}), 200
 
 @app.route('/get/user/validate', methods=['POST'])
 def validate_user():
@@ -171,6 +174,7 @@ def validate_user():
         })
 
 
+
 @app.route('/get/user', methods=['GET'])
 def get_user():
     user_id = request.args.get('user_id')
@@ -191,7 +195,8 @@ def get_user():
             'user_password': result[2],
             'user_first': result[3],
             'user_pfp': result[4],
-            'room_code': result[5]
+            'user_score': result[5],
+            'room_code': result[6]
             
         }
         return jsonify(user_data)
@@ -199,6 +204,36 @@ def get_user():
         # If no matching User is found, return a 404 error
         return jsonify({'error': f'User with user_id {user_id} not found'}), 404
     
+
+@app.route('/get/room/users', methods=['GET'])
+def get_room_users():
+    room_code = request.args.get('room_code')
+
+    cur = conn.cursor()
+    cur.execute('SELECT user_id FROM Users WHERE room_code = %s', (room_code,))
+    result = cur.fetchall()
+    cur.close()
+
+    ids = []
+    for row in result:
+        ids.append(row[0])
+
+    return jsonify(ids)
+
+@app.route('/get/room/tasks', methods=['GET'])
+def geT_room_tasks():
+    room_code = request.args.get('room_code')
+
+    cur = conn.cursor()
+    cur.execute('SELECT task_id FROM Tasks WHERE room_code = %s', (room_code,))
+    result = cur.fetchall()
+    cur.close()
+
+    ids = []
+    for row in result:
+        ids.append(row[0])
+
+    return jsonify(ids)
 
 @app.route('/get/room/all', methods=['GET'])
 def get_all_rooms():
@@ -283,19 +318,20 @@ def create_user():
     data = request.get_json()
 
     # Get the user data from the request
-    username = data['username']
-    password = data['password']
-    isFirst = data['isFirst']
-    pfp_path = data['pfp_path']
+    user_name = data['user_name']
+    user_password = data['user_password']
+    user_first = data['user_first']
+    user_pfp = data['user_pfp']
+    user_score = data['user_score']
 
     cur = conn.cursor()
 
     # Insert the new user into the Users table
     cur.execute("""
-        INSERT INTO Users (user_name, user_password, user_first, user_pfp)
-        VALUES (%s, %s, %s, %s)
+        INSERT INTO Users (user_name, user_password, user_first, user_pfp, user_score)
+        VALUES (%s, %s, %s, %s, %s)
         RETURNING user_id;
-    """, (username, password, isFirst, pfp_path))
+    """, (user_name, user_password, user_first, user_pfp, user_score))
 
     user_id = cur.fetchone()[0]
 
@@ -304,7 +340,7 @@ def create_user():
 
     return jsonify({
         "user_id": user_id,
-        "username": username
+        "username": user_name
     })
 
 @app.route('/create/task', methods=['POST'])
@@ -315,16 +351,18 @@ def create_task():
     task_description = data['task_description']
     task_points = data['task_points']
     task_freq = data['task_freq']
+    task_start = data['task_start']
+    task_complete = data['task_complete']
     user_id = data['user_id']
 
     cur = conn.cursor()
 
     # Insert the new user into the Users table
     cur.execute("""
-        INSERT INTO Tasks (task_name, task_description, task_points, task_freq, user_id)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO Tasks (task_name, task_description, task_points, task_freq, task_start, task_complete, user_id)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         RETURNING task_id;
-    """, (task_name, task_description, task_points, task_freq, user_id))
+    """, (task_name, task_description, task_points, task_freq, task_start, task_complete, user_id))
     
     task_id = cur.fetchone()[0]
 
