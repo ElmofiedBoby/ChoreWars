@@ -66,6 +66,23 @@ app.get("/createTasks", (request, response) => {
 });
 
 app.post("/createTasks", async (request, response) => { 
+    
+    let task_name = request.body.taskDescription;
+    let task_points = request.body.pointsAmount;
+    let task_freq = request.body.daysAmount;
+    let task_start = new Date();
+    let task_complete = false;
+
+    let data = {
+        "task_name": task_name,
+        "task_description": null,
+        "task_points": task_points,
+        "task_freq": task_freq,
+        "task_start": task_start,
+        "task_complete": task_complete,
+        "user_id": user_id
+    }
+    
     const variables = {
        /* taskDescription: request.body.taskDescription,
         pointAmount: request.body.pointAmount,
