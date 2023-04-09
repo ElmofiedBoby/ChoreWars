@@ -86,16 +86,17 @@ def update_task():
 
     cur = conn.cursor()
 
-    cur.execute("UPDATE Users SET user_name = %s WHERE user_id = %s", (user_name, user_id))
-    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_password, user_id))
-    cur.execute("UPDATE Users SET user_password = %s WHERE user_id = %s", (user_first, user_id))
-    cur.execute("UPDATE Users SET user_pfp = %s WHERE user_id = %s", (user_pfp, user_id))
-    cur.execute("UPDATE Users SET room_code = %s WHERE user_id = %s", (room_code, user_id))
+    cur.execute("UPDATE Tasks SET task_name = %s WHERE task_id = %s", (task_name, task_id))
+    cur.execute("UPDATE Tasks SET task_description = %s WHERE task_id = %s", (task_description, task_id))
+    cur.execute("UPDATE Tasks SET task_points = %s WHERE task_id = %s", (task_points, task_id))
+    cur.execute("UPDATE Tasks SET task_freq = %s WHERE task_id = %s", (task_freq, task_id))
+    cur.execute("UPDATE Tasks SET user_id = %s WHERE task_id = %s", (user_id, task_id))
+    cur.execute("UPDATE Tasks SET room_code = %s WHERE task_id = %s", (room_code, task_id))
     conn.commit()
     cur.close()
 
      # Return a success message
-    return jsonify({'success': f'User with ID {user_id} updated'}), 200
+    return jsonify({'success': f'Task with ID {task_id} updated'}), 200
 
 
 @app.route('/update/user', methods=['POST'])
