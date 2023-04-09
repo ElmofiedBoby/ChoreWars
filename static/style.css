@@ -149,7 +149,7 @@ input[type="password"] {
   background: linear-gradient(to bottom, rgb(40,93,179), rgb(0,176,240)); /* replace these colors with your desired gradient */
   
   width: 100%;
-  height: 300vh;
+  height: 100vh;
   overflow: auto;
   /*display: flex;*/
   justify-content: center;
@@ -169,4 +169,24 @@ input[type="password"] {
 
 .horizontal-line {
   border-bottom: 2px solid black;
+}
+
+form {
+  font-size: 1em;
+  background-color: rgb(206, 192, 181);
+  font-family: 'Roboto', sans-serif;
+  width: 30em;
+  height: fit-content;
+  border-style: ridge;
+  border-radius: 25px;
+  border-width: 5px;
+  border-color: rgb(196, 168, 140);
+  padding: 1.5%;
+  /*margin-left: 40%;
+  margin-right: 40%;
+  margin-top: 40%;*/
+  display: inline-block;
+  margin-top: 20%
+ 
+
 }
