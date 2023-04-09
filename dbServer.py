@@ -42,6 +42,7 @@ def init():
             user_password VARCHAR(255),
             user_first BOOL,
             user_pfp VARCHAR(255),
+            user_score INTEGER,
             room_code VARCHAR(6),
             FOREIGN KEY (room_code)
                 REFERENCES Rooms (room_code)
@@ -56,6 +57,8 @@ def init():
             task_description VARCHAR(255),
             task_points INTEGER,
             task_freq INTEGER,
+            task_start DATE,
+            task_complete BOOL,
             user_id INTEGER,
             room_code VARCHAR(6),
             FOREIGN KEY (user_id)
@@ -81,6 +84,8 @@ def update_task():
     task_description = data['task_description']
     task_points = data['task_points']
     task_freq = data['task_freq']
+    task_start = data['task_start']
+    task_complete = data['task_complete']
     user_id = data['user_id']
     room_code = data['room_code']
 
@@ -90,6 +95,8 @@ def update_task():
     cur.execute("UPDATE Tasks SET task_description = %s WHERE task_id = %s", (task_description, task_id))
     cur.execute("UPDATE Tasks SET task_points = %s WHERE task_id = %s", (task_points, task_id))
     cur.execute("UPDATE Tasks SET task_freq = %s WHERE task_id = %s", (task_freq, task_id))
+    cur.execute("UPDATE Tasks SET task_start = %s WHERE task_id = %s", (task_start, task_id))
+    cur.execute("UPDATE Tasks SET task_complete = %s WHERE task_id = %s", (task_complete, task_id))
     cur.execute("UPDATE Tasks SET user_id = %s WHERE task_id = %s", (user_id, task_id))
     cur.execute("UPDATE Tasks SET room_code = %s WHERE task_id = %s", (room_code, task_id))
     conn.commit()
@@ -218,6 +225,15 @@ def get_room():
     else:
         # If no matching room is found, return a 404 error
         return jsonify({'error': f'Room with room_code {room_code} not found'}), 404
+    
+@app.route('/get/leaderboard', methods=['GET'])
+def get_leaderboard():
+    room_code = request.args.get('room_code')
+
+    return jsonify({
+        "status": "endpoint incomplete :("
+    })
+
 
 @app.route('/create/room', methods=['POST'])
 def create_room():
