@@ -119,6 +119,80 @@ app.get("/signup", (request, response) => {
 
 });
 
+app.post("/signup", (request, response) => {
+    let userData = {
+        user_name: request.body.username,
+        user_password: request.body.password,
+        room_code: request.body.roomcode,
+        user_pfp: null,
+    };
+
+    console.log(userData.room_code);
+
+    let user_first = true;
+
+    if(userData.room_code) {
+        user_first = false;
+    }
+
+    if(user_first) {
+        let room_data = {
+            room_name: 'sampleRoom',
+            room_limit: 4
+        }
+
+        fetch('http://localhost:5001/create/room', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(room_data),
+            })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            return response.json();
+            })
+            .then(data => {
+            console.log(data);
+                response.redirect('/');  
+            })
+            .catch(error => {
+            console.error(error);
+            });
+    }
+
+    userData = {
+        user_name: request.body.username,
+        user_password: request.body.password,
+        room_code: request.body.roomcode,
+        user_pfp: null,
+        user_first: user_first
+    }
+
+    fetch('http://localhost:5001/create/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData),
+        })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            response.redirect('/');  
+        })
+        .catch(error => {
+        console.error(error);
+        });
+})
+
 app.get("/tasks", (request, response) => { 
     const variables ={
         
