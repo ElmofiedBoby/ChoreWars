@@ -122,6 +122,23 @@ def update_user():
      # Return a success message
     return jsonify({'success': f'User with ID {user_id} updated'}), 200
 
+@app.route('/update/room', methods=['POST'])
+def update_user():
+    data = request.get_json()
+
+    room_code = data['room_code']
+    room_name = data['room_name']
+    room_limit = data['room_limit']
+
+    cur = conn.cursor()
+
+    cur.execute("UPDATE Rooms SET room_code = %s")
+    conn.commit()
+    cur.close()
+
+     # Return a success message
+    return jsonify({'success': f'User with ID {user_id} updated'}), 200
+
 @app.route('/get/user/validate', methods=['POST'])
 def validate_user():
     data = request.get_json()
