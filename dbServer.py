@@ -133,7 +133,7 @@ def update_user():
     return jsonify({'success': f'User with ID {user_id} updated'}), 200
 
 @app.route('/update/room', methods=['POST'])
-def update_user():
+def update_room():
     data = request.get_json()
 
     room_code = data['room_code']
@@ -322,7 +322,7 @@ def create_user():
     user_password = data['user_password']
     user_first = data['user_first']
     user_pfp = data['user_pfp']
-    user_score = data['user_score']
+    user_score = 0
 
     cur = conn.cursor()
 
@@ -375,4 +375,4 @@ def create_task():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=os.getenv('DB_PORT'))
+    app.run(debug=False, port=os.getenv('DB_PORT'))

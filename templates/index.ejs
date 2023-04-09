@@ -15,18 +15,20 @@
                     <img width="200" height="200" src="logo.png">
                 </div>
                 <div id="div-bottom-buttons">
-                    <div id="inputs">
-                        <label>Username</label>
-                        <input type="text"/>
-                        <br/>
-                        <label>Password</label>
-                        <input type="password"/>
-                        <br/>
-                        <div id="butt">
-                            <a class="login-signup <%- styleLoggedOut %>" role="button" href="/tasks">Login</a><br><br>
-                            <a class="login-signup <%- styleLoggedOut %>" role="button" href="/signup">Signup</a><br><br>
+                    <form action="/login" method="POST">
+                        <div id="inputs">
+                            <label>Username</label>
+                            <input class="username" id="username" name="username" type="text"/>
+                            <br/>
+                            <label>Password</label>
+                            <input class="password" id="password" name="password" type="password"/>
+                            <br/>
+                            <div id="butt">
+                                <input type="submit" value="Login" class="login-signup"/><br><br>
+                                <a class="login-signup <%- styleLoggedOut %>" role="button" href="/signup">Signup</a><br><br>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
